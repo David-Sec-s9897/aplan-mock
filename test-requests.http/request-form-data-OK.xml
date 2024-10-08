@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubmissionStatus xmlns="http://www.grid-applications.com/documents/submission-status" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.grid-applications.com/documents/submission-status SubmissionStatus.xsd">
+    <DocumentId v="2015-000001"/>
+    <DocumentVersion v="2"/>
+    <SubmissionDateTime v="2024-10-07T08:21:48Z"/>
+    <CapacityTimeInterval v="2015-09-01T08:00Z/2015-09-02T10:00Z"/>
+    <Submission>
+        <InArea v="10YCH-SWISSGRIDZ"/>
+        <OutArea v="10YAT-APG------L"/>
+        <Recipient>
+            <Name v="ENTSO-E Transparency Portal"/>
+            <Status v="SUCCESS"/>
+        </Recipient>
+    </Submission>
+    <Submission>
+        <InArea v="10YAT-APG------L"/>
+        <OutArea v="10YCH-SWISSGRIDZ"/>
+        <Recipient>
+            <Name v="ENTSO-E Transparency Portal"/>
+            <Status v="SUCCESS"/>
+        </Recipient>
+    </Submission>
+</SubmissionStatus>

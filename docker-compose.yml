@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  quarkus-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quarkus-app-image
+    container_name: quarkus-app
+    ports:
+      - "8080:8080"   # Mapping Quarkus app port
+
+volumes:
+  quarkus_data:
+    driver: local
