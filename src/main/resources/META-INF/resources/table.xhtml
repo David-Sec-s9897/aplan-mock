@@ -21,7 +21,7 @@
                 <div class="col-12">
                     <div class="card">
                         <h5>Timesheet Preferences</h5>
-                        <p></p>
+
                         <p:dataTable id="timeseriesDT" widgetVar="timeseriesDT" var="job"
                                      value="#{timeSeriesTableView.timeSeriesJobs}"
                                      rows="20" rowKey="#{ts.businessKey}" paginator="true" editable="true"
@@ -44,13 +44,13 @@
                                 <p:rowToggler/>
                             </p:column>
 
-                            <p:column headerText="State" style="width:2rem" sortBy="#{job.state}"
+                            <p:column headerText="#{msg['datatable.state']}" style="width:2rem" sortBy="#{job.state}"
                                       filterBy="#{job.state}">
                                 <i class="pi pi-#{job.state?'check':'times'}-circle "
                                    style="font-size: 1.5rem; color: #{job.state?'#ACEBB4':'#FABD9A'}"/>
                             </p:column>
 
-                            <p:column headerText="Name" style="width:15rem" sortBy="#{job.timeSeriesName}"
+                            <p:column headerText="#{msg['datatable.name']}" style="width:15rem" sortBy="#{job.timeSeriesName}"
                                       filterBy="#{job.timeSeriesName}">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{job.timeSeriesName}"/></f:facet>
@@ -59,7 +59,7 @@
                                 </p:cellEditor>
                             </p:column>
 
-                            <p:column headerText="In border" style="width:9rem"
+                            <p:column headerText="#{msg['datatable.inBorder']}" style="width:9rem"
                                       sortBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder}"
                                       filterBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder}">
                                 <span class="flag flag-#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder.code}"
@@ -68,7 +68,7 @@
                                               value="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder.name}"/>
                             </p:column>
 
-                            <p:column headerText="Out Border" style="width:9rem"
+                            <p:column headerText="#{msg['datatable.outBorder']}" style="width:9rem"
                                       sortBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder}"
                                       filterBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder}">
                                 <span class="flag flag-#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder.code}"
@@ -77,11 +77,11 @@
                                               value="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder.name}"/>
                             </p:column>
 
-                            <p:column headerText="Active" sortBy="#{job.active}" filterBy="#{job.active}">
+                            <p:column headerText="#{msg['datatable.active']}" sortBy="#{job.active}" filterBy="#{job.active}">
                                 <h:outputText value="#{job.active}"/>
                             </p:column>
 
-                            <p:column headerText="Cron">
+                            <p:column headerText="#{msg['datatable.cron']}">
                                 <p:cellEditor id="editorcell">
                                     <f:facet name="output">
                                         <p:outputLabel
@@ -98,19 +98,19 @@
 
                             </p:column>
 
-                            <p:column headerText="Last Start">
+                            <p:column headerText="#{msg['datatable.lastStart']}">
                                 <h:outputText value="#{job.lastStart}">
                                     <f:convertDateTime timeZone="UTC" pattern="dd.MM.yyyy HH:mm"/>
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Next Start">
+                            <p:column headerText="#{msg['datatable.nextStart']}">
                                 <h:outputText value="#{job.nextStart}">
                                     <f:convertDateTime timeZone="UTC" pattern="dd.MM.yyyy HH:mm"/>
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Status" sortBy="#{job.state}">
+                            <p:column headerText="#{msg['datatable.status']}" sortBy="#{job.state}">
                                 <h:outputText styleClass="badge status-#{timeSeriesTableView.getStatus(job)}"
                                               value="#{timeSeriesTableView.getStatus(job)}"/>
                             </p:column>
@@ -129,21 +129,21 @@
                                           rendered="#{not job.suspended}" id="handlestopjob"
                                           oncomplete="hideStatus(#{indexVar});"
                                           disabled="#{job.cronExpression == null or (job.cronExpression == null and job.suspended)}"/>
-                                <p:tooltip for="handlestopjob" value="Suspend Cron"/>
-                                <p:tooltip for="handleactivatejob" value="Activate Cron"/>
+                                <p:tooltip for="handlestopjob" value="#{msg['datatable.tooltip.suspend-Cron']}"/>
+                                <p:tooltip for="handleactivatejob" value="#{msg['datatable.tooltip.activate-Cron']}"/>
                             </p:column>
 
                             <p:column id="autoStart" style="width:2.4em" exportable="false" styleClass="no-header"
-                                      headerText="Auto start">
+                                      headerText="#{msg['datatable.automatic-start']}">
                                 <p:commandButton icon="pi pi-chevron-circle-left"
                                                  actionListener="#{timeSeriesTableView.handleStartProcess(job)}"
                                                  id="handlestartprocessjob"
                                                  disabled="#{job.fileUpload or not job.active}"/>
                                 <p:tooltip for="handlestartprocessjob"
-                                           value="Start last interval"/>
+                                           value="#{msg['datatable.tooltip.automatic-start']}"/>
                             </p:column>
                             <p:column id="manualStart" style="width:2.4em" exportable="false" styleClass="no-header"
-                                      headerText="Manual start">
+                                      headerText="#{msg['datatable.manual-start']}">
                                 <p:commandButton icon="pi pi-user"
                                                  oncomplete="PF('information').show();"
                                                  actionListener="#{timeSeriesTableView.setSelectedTimeSeriesJob(job)}"
@@ -151,7 +151,7 @@
                                                  id="startautomaticjob"
                                                  partialSubmit=":form:timeseriesDT:manualStart"
                                                  disabled="#{job.fileUpload or not job.active}"/>
-                                <p:tooltip value="Start Process manually" for="startautomaticjob"/>
+                                <p:tooltip value="#{msg['datatable.tooltip.manual-start']}" for="startautomaticjob"/>
                             </p:column>
                             <p:rowExpansion>
                                 <ui:include src="row-expansion.xhtml"/>

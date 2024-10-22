@@ -31,13 +31,13 @@ public class TimeSeriesScrollerView implements Serializable {
     private ProcessInstance selectedProcessInstance;
     public static final String UNIFIED_PROCESS_NAME = "Unified Time Series Upload";
 
-    @RestClient
-    CamundaRestService restService;
+    //@RestClient
+    //CamundaRestService restService;
 
     @PostConstruct
     public void init(){
-        historicProcessInstances = restService.loadProcessInstancesHistory().stream().filter(p ->
-                UNIFIED_PROCESS_NAME.equals(p.getProcessDefinitionName())).collect(groupingBy(CamundaHistoryProcessInstancesResponse::getBusinessKey, toList()));
+        //historicProcessInstances = restService.loadProcessInstancesHistory().stream().filter(p ->
+         //       UNIFIED_PROCESS_NAME.equals(p.getProcessDefinitionName())).collect(groupingBy(CamundaHistoryProcessInstancesResponse::getBusinessKey, toList()));
         this.processInstances = ProcessInstanceService.getProcessInstnaces();
         LOGGER.log(Level.INFO, "{0} instances loaded", processInstances.size());
     }

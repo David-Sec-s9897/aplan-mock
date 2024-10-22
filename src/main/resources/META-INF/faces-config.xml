@@ -17,5 +17,21 @@
             <renderer-class>com.unicorn.sg.demo.view.component.FreyaMenuRenderer</renderer-class>
         </renderer>
     </render-kit>
+
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>cs</supported-locale>
+            <supported-locale>de</supported-locale>
+            <supported-locale>fr</supported-locale>
+            <supported-locale>it</supported-locale>
+
+        </locale-config>
+
+        <resource-bundle>
+            <base-name>com.unicorn.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
     
 </faces-config>

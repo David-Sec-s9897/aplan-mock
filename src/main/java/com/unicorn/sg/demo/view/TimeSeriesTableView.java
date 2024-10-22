@@ -49,6 +49,7 @@ public class TimeSeriesTableView implements Serializable {
     TPStartProcessRequest startProcessRequest;
 
     private transient List<Event> events;
+
     private transient List<Event> failedEvents;
 
     transient UIData chronolineData;

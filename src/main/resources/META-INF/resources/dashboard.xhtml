@@ -12,8 +12,7 @@
             <div class="grid">
                 <div class="col-12">
                     <div class="notification">
-                        <h6> TP- DEMO Integration ENV. <a
-                                href="#">Profile settings <i class="pi pi-arrow-up"></i></a></h6>
+                        <h6> #{msg['greeting']}</h6>
                     </div>
                 </div>
                 <div class="col-12">
@@ -21,7 +20,7 @@
                         <div class="col">
                             <div class="card overview-box white">
                                 <div class="overview-info">
-                                    <h6>Running process instances</h6>
+                                    <h6>#{msg['dashboard.running-process-instances']}</h6>
                                     <h1>#{metricsView.runningProcessCount.count}</h1>
                                 </div>
                                 <i class="pi pi-clone"></i>
@@ -30,7 +29,7 @@
                         <div class="col">
                             <div class="card overview-box blue">
                                 <div class="overview-info">
-                                    <h6>Open incidents</h6>
+                                    <h6>#{msg['dashboard.open-incidents']}</h6>
                                     <h1>#{metricsView.openIncidentsCount.count}</h1>
                                 </div>
                                 <i class="pi pi-users"></i>
@@ -39,7 +38,7 @@
                         <div class="col">
                             <div class="card overview-box gray">
                                 <div class="overview-info">
-                                    <h6>Open Human Tasks</h6>
+                                    <h6>#{msg['dashboard.human-open-task']}</h6>
                                     <h1>#{metricsView.unassignedTasks.size()}</h1>
                                 </div>
                                 <i class="pi pi pi-chart-pie"></i>
@@ -48,7 +47,7 @@
                         <div class="col">
                             <div class="card overview-box darkgray">
                                 <div class="overview-info">
-                                    <h6>Missing intervals count</h6>
+                                    <h6>#{msg['dashboard.missingIntervals-count']}</h6>
                                     <h1>#{customTimelineView.missingIntervalsCont}</h1>
                                 </div>
                                 <i class="pi pi-th-large"></i>
@@ -57,7 +56,7 @@
                         <div class="col">
                             <div class="card overview-box orange">
                                 <div class="overview-info">
-                                    <h6>Monitored processes</h6>
+                                    <h6>#{msg['dashboard.monitored-processes']}</h6>
                                     <h1>#{customTimelineView.monitoredProcessesCont}</h1>
                                 </div>
                                 <i class="pi pi-wave-pulse"></i>
@@ -71,8 +70,8 @@
                             <div class="card chart">
                                 <div class="card-header">
                                     <div class="card-title">
-                                        <h6>Nasdaq 100</h6>
-                                        <p class="subtitle">Line graph</p>
+                                        <h6>#{msg['dashboard.timeline-header']}</h6>
+                                        <p class="subtitle"></p>
                                     </div>
                                 </div>
                                 <div>

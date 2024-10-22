@@ -2104,7 +2104,7 @@ a {
   margin: 0;
   list-style: none;
   overflow: auto;
-  max-height: 320px;
+  max-height: 650px;
 }
 .layout-rightpanel .rightpanel-wrapper .rightpanel-section.tasks-section > ul > li {
   padding: 16px;

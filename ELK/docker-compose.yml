@@ -15,7 +15,7 @@ services:
   logstash:
     image: docker.io/elastic/logstash:8.15.2
     volumes:
-      - source: $HOME/IdeaProjects/ELK/pipelines
+      - source: /Users/davidsec/IdeaProjects/aplan-mock/ELK/pipelines/
         target: /usr/share/logstash/pipeline
         type: bind
     ports:

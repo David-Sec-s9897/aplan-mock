@@ -19,27 +19,23 @@ public class EventService {
         events.add(Event.builder().name("Merge TS").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Send to Entsoe").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Wait for response").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
-        events.add(Event.builder().name("Validate ACK").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
+        events.add(Event.builder().name("Validate ACK").overviewMessage("A01 - Document was accepted").description("").code("").status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Archive data").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
         return events;
     }
 
     public static List<Event> getFailedEvents() {
         List<Event> events = new ArrayList<>();
-        events.add(Event.builder().name("Calculate intervals").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
-        events.add(Event.builder().name("Call TSDA").overviewMessage("").description("").code(ExampleCodes.TSDA_RESPONSE).status(EventStaus.SUCCESS).build());
+        events.add(Event.builder().name("Call TSDA").overviewMessage("Loaded 2 Timeseries").description("silo:32624:444309:Calc").code(ExampleCodes.TSDA_RESPONSE).status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Validate inputs").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Merge TS").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Send to Entsoe").overviewMessage("").description("").code(ExampleCodes.MAPPED_XML).status(EventStaus.SUCCESS).build());
         events.add(Event.builder().name("Wait for response").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
-        events.add(Event.builder().name("Validate ACK").overviewMessage("A02 - Document was rejected").description("Data insertion not allowed - Value delivered in Resolution element is not correct. Submission resolution\n" +
-                "                        does not match the configuration.\n" +
-                "                        Expected resolution: PT60M\n" +
-                "                        Delivered resolution: PT15M\n" +
-                "                        Data Item: Actual Total Load [6.1.A]\n" +
-                "                        Dimension: BZN|CH\n" +
-                "                        Data provider: SWISSGRID\n" +
-                "                        Time Interval: 2014-09-03T22:00:00.000Z/2014-09-04T22:00:00.000Z").code(ExampleCodes.ACK_FAILED).status(EventStaus.FAILED).build());
+        events.add(Event.builder().name("Validate ACK").overviewMessage("A02 - Document was rejected").description("""
+                Data insertion not allowed - Value delivered in Resolution element is not correct. Submission resolution
+                                      does not match the configuration. Expected resolution: PT60M Delivered resolution: PT15M
+                                        Data Item: Actual Total Load [6.1.A] Dimension: BZN|CH Data provider: SWISSGRID Time Interval: 2014-09-03T22:00:00.000Z/2014-09-04T22:00:00.000Z"""
+        ).code(ExampleCodes.ACK_FAILED).status(EventStaus.FAILED).build());
         events.add(Event.builder().name("Archive data").overviewMessage("").description("").code("").status(EventStaus.SUCCESS).build());
         return events;
     }
