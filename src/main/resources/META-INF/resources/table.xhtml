@@ -1,0 +1,225 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="template.xhtml">
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/flags/flags.css"/>
+
+    </ui:define>
+
+    <ui:define name="title">DataTable</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="growl" showSummary="true" showDetail="true" keepAlive="true" life="3000">
+                <p:autoUpdate/>
+            </p:growl>
+            <div class="grid table-demo">
+                <div class="col-12">
+                    <div class="card">
+                        <h5>Timesheet Preferences</h5>
+                        <p></p>
+                        <p:dataTable id="timeseriesDT" widgetVar="timeseriesDT" var="job"
+                                     value="#{timeSeriesTableView.timeSeriesJobs}"
+                                     rows="20" rowKey="#{ts.businessKey}" paginator="true" editable="true"
+                                     editMode="cell">
+
+                            <f:facet name="header">
+                                <div class="customers-table-header">
+                                    <span style="font-weight: bold">Processes</span>
+
+                                    <span class="ui-input-icon-left filter-container">
+                                        <i class="pi pi-search"/>
+                                        <p:inputText id="globalFilter" onkeyup="PF('timeseriesDT').filter()"
+                                                     placeholder="Global Search"/>
+                                    </span>
+                                </div>
+                            </f:facet>
+                            <p:ajax event="cellEdit" update=":form:growl"
+                                    listener="#{timeSeriesTableView.onCellEdit}"/>
+                            <p:column style="width:2rem" ariaHeaderText="Row Toggler">
+                                <p:rowToggler/>
+                            </p:column>
+
+                            <p:column headerText="State" style="width:2rem" sortBy="#{job.state}"
+                                      filterBy="#{job.state}">
+                                <i class="pi pi-#{job.state?'check':'times'}-circle "
+                                   style="font-size: 1.5rem; color: #{job.state?'#ACEBB4':'#FABD9A'}"/>
+                            </p:column>
+
+                            <p:column headerText="Name" style="width:15rem" sortBy="#{job.timeSeriesName}"
+                                      filterBy="#{job.timeSeriesName}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{job.timeSeriesName}"/></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{job.timeSeriesName}"
+                                                                       style="width:96%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="In border" style="width:9rem"
+                                      sortBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder}"
+                                      filterBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder}">
+                                <span class="flag flag-#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder.code}"
+                                      style="width: 30px; height: 20px"/>
+                                <h:outputText style="vertical-align: middle; margin-left: .5rem"
+                                              value="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).inBorder.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Out Border" style="width:9rem"
+                                      sortBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder}"
+                                      filterBy="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder}">
+                                <span class="flag flag-#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder.code}"
+                                      style="width: 30px; height: 20px"/>
+                                <h:outputText style="vertical-align: middle; margin-left: .5rem"
+                                              value="#{timeSeriesTableView.getBordersFromName(job.timeSeriesName).outBorder.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Active" sortBy="#{job.active}" filterBy="#{job.active}">
+                                <h:outputText value="#{job.active}"/>
+                            </p:column>
+
+                            <p:column headerText="Cron">
+                                <p:cellEditor id="editorcell">
+                                    <f:facet name="output">
+                                        <p:outputLabel
+                                                value="#{timeSeriesTableView.formatCron(job.cronExpression, job.fileUpload)}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{job.cronExpression}"
+                                                     id="cellCronExpressionEditInput"
+                                                     validator="#{timeSeriesTableView.isCronExpressionValid}"
+                                                     disabled="#{job.fileUpload}"
+                                                     rendered="#{job.fileUpload == false}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column headerText="Last Start">
+                                <h:outputText value="#{job.lastStart}">
+                                    <f:convertDateTime timeZone="UTC" pattern="dd.MM.yyyy HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Next Start">
+                                <h:outputText value="#{job.nextStart}">
+                                    <f:convertDateTime timeZone="UTC" pattern="dd.MM.yyyy HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Status" sortBy="#{job.state}">
+                                <h:outputText styleClass="badge status-#{timeSeriesTableView.getStatus(job)}"
+                                              value="#{timeSeriesTableView.getStatus(job)}"/>
+                            </p:column>
+
+
+                            <p:column style="width:2.4em; " sortBy="#{job.suspended}" filterMatchMode="equals"
+                                      exportable="false" styleClass="no-header" headerText="Handle Activation">
+                                <p:button icon="pi pi-play-circle"
+                                          actionListener="#{timeSeriesTableView.handleActivateJob(job)}"
+                                          rendered="#{job.suspended}" id="handleactivatejob"
+                                          oncomplete="hideStatus(#{indexVar});"
+                                          disabled="#{job.cronExpression == null or not job.active}"/>
+
+                                <p:button icon="pi pi-stop-circle"
+                                          actionListener="#{timeSeriesTableView.handleStopJob(job)}"
+                                          rendered="#{not job.suspended}" id="handlestopjob"
+                                          oncomplete="hideStatus(#{indexVar});"
+                                          disabled="#{job.cronExpression == null or (job.cronExpression == null and job.suspended)}"/>
+                                <p:tooltip for="handlestopjob" value="Suspend Cron"/>
+                                <p:tooltip for="handleactivatejob" value="Activate Cron"/>
+                            </p:column>
+
+                            <p:column id="autoStart" style="width:2.4em" exportable="false" styleClass="no-header"
+                                      headerText="Auto start">
+                                <p:commandButton icon="pi pi-chevron-circle-left"
+                                                 actionListener="#{timeSeriesTableView.handleStartProcess(job)}"
+                                                 id="handlestartprocessjob"
+                                                 disabled="#{job.fileUpload or not job.active}"/>
+                                <p:tooltip for="handlestartprocessjob"
+                                           value="Start last interval"/>
+                            </p:column>
+                            <p:column id="manualStart" style="width:2.4em" exportable="false" styleClass="no-header"
+                                      headerText="Manual start">
+                                <p:commandButton icon="pi pi-user"
+                                                 oncomplete="PF('information').show();"
+                                                 actionListener="#{timeSeriesTableView.setSelectedTimeSeriesJob(job)}"
+                                                 update=":form:informationdialog"
+                                                 id="startautomaticjob"
+                                                 partialSubmit=":form:timeseriesDT:manualStart"
+                                                 disabled="#{job.fileUpload or not job.active}"/>
+                                <p:tooltip value="Start Process manually" for="startautomaticjob"/>
+                            </p:column>
+                            <p:rowExpansion>
+                                <ui:include src="row-expansion.xhtml"/>
+                            </p:rowExpansion>
+                        </p:dataTable>
+
+                        <p:dialog header="Process start" widgetVar="information" modal="true" width="1025" height="400"
+                                  id="informationdialog">
+                            <div class="grid ui-fluid">
+                                <div class="col-12 md:col-12">
+                                    <div class="card">
+                                        <h4>#{timeSeriesTableView.selectedTimeSeriesJob.timeSeriesName}</h4>
+
+                                        <h5>Revision number</h5>
+                                        <div class="grid formgrid">
+                                            <div class="col-12 md:col-12">
+                                            <span class="ui-input-icon-left">
+                                                <i class="pi pi-hashtag"></i>
+                                                <p:inputText placeholder="Revision number" value="#{timeSeriesTableView.startProcessRequest.revisionNumber}"/>
+                                            </span>
+                                            </div>
+                                        </div>
+
+                                        <h5>Start interval</h5>
+                                        <p:datePicker id="startInterval" showIcon="true" update="" showTime="true" value="#{timeSeriesTableView.startProcessRequest.startTime}">
+                                            <p:ajax event="dateSelect" update="@next" />
+                                        </p:datePicker>
+
+                                        <h5>End interval</h5>
+                                        <p:datePicker id="endInterval" showIcon="true" showTime="true" value="#{timeSeriesTableView.startProcessRequest.endTime}" mindate="#{timeSeriesTableView.startProcessRequest.startTime}"/>
+
+                                        <h5>Retry count</h5>
+                                        <div class="grid formgrid">
+                                            <div class="col-12 md:col-12">
+                                            <span class="ui-input-icon-left">
+                                                <i class="pi pi-replay"></i>
+                                                <p:inputText placeholder="Retry count" value="#{timeSeriesTableView.startProcessRequest.retryCount}"/>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <h5>Retry delay</h5>
+                                        <div class="grid formgrid">
+                                            <div class="col-12 md:col-12">
+                                            <span class="ui-input-icon-left">
+                                                <i class="pi pi-hourglass"></i>
+                                                        <p:inputText id="regex" value="#{timeSeriesTableView.startProcessRequest.retryDelay}"
+                                                                     placeholder="Retry delay"
+                                                                     validatorMessage="Value does not match pattern.">
+                                                            <f:validateRegex pattern="#{stringUtils.periodValidationRegex}"/>
+                                                        </p:inputText>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="grid formgrid">
+                                            <div class="col-12 md:col-12" style="margin-top: 20px;">
+                                                <p:commandButton action="#{timeSeriesTableView.handleStartManualProcess()}" value="Start process"
+                                                                 oncomplete="PF('information').hide();"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:dialog>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

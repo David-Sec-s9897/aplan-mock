@@ -1,0 +1,24 @@
+{@java.util.List<com.unicorn.sg.demo.model.Item> items}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Items test</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+
+</head>
+<body>
+    {#include /layout/header.html /} <!-- Include the header -->
+
+
+{#for item in items}
+    <li>
+        <strong>Name:</strong> {item.name} <br>
+        <strong>Price:</strong> {item.price}
+    </li>
+{/for}
+    {#include /layout/footer.html /} <!-- Include the header -->
+
+</body>
+</html>

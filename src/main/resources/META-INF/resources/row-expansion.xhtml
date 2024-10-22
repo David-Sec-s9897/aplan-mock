@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dataTable var="i" value="#{timeSeriesScrollerView.processInstances}"
+                 style="width: 95%; margin-left: 3rem"
+                 scrollable="true"
+                 scrollHeight="600">
+        <f:facet name="header">
+            <div class="customers-table-header">
+                <span style="font-weight: bold">Process Instances</span>
+
+                <span class="ui-input-icon-left filter-container">
+                                        <i class="pi pi-search"/>
+                                        <p:inputText id="globalFilter2" onkeyup="PF('timeseriesDT').filter()"
+                                                     placeholder="Process Search"/>
+                                    </span>
+            </div>
+        </f:facet>
+        <p:column headerText="Id" style="width:22rem" footerText="Name">
+            <a href="#{timeSeriesTableView.redirectToCamunda(i.id)}">#{i.id}</a>
+        </p:column>
+        <p:column headerText="Start" style="width:10rem" footerText="Country">
+            <h:outputText value="#{dateTimeUtils.format(i.startTime)}"/>
+        </p:column>
+        <p:column headerText="End" style="width:10rem" footerText="Representative">
+            <h:outputText value="#{dateTimeUtils.format(i.endTime)}"/>
+        </p:column>
+        <p:column headerText="Interval"
+                  sortBy="#{dateTimeUtils.format(i.intervalStart, dateTimeUtils.dateTimeFormatterShort)} - #{dateTimeUtils.format(i.intervalEnd, dateTimeUtils.dateTimeFormatterShort)}"
+                  filterBy="#{dateTimeUtils.format(i.intervalStart, dateTimeUtils.dateTimeFormatterShort)} - #{dateTimeUtils.format(i.intervalEnd, dateTimeUtils.dateTimeFormatterShort)}"
+                  style="width:22rem" footerText="Interval">
+            <h:outputText
+                    value="#{dateTimeUtils.format(i.intervalStart, dateTimeUtils.dateTimeFormatterShort)} - #{dateTimeUtils.format(i.intervalEnd, dateTimeUtils.dateTimeFormatterShort)}"/>
+        </p:column>
+        <p:column headerText="Status" sortBy="#{i.status}" filterBy="#{i.status}"
+                  footerText="Status">
+            <span class="badge status-#{i.status}">#{i.status}</span>
+            <p:commandButton icon="pi pi-refresh" rendered="#{i.status == 'failed'}"
+                             style="margin-left: 1rem">
+                <p:tooltip value="Process details" for="startautomaticjob"/>
+            </p:commandButton>
+        </p:column>
+        <p:column>
+
+            <p:commandButton icon="pi pi-search" update="@form"
+                             oncomplete="PF('dlg').show()"
+                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                <f:setPropertyActionListener value="#{i}" target="#{timeSeriesTableView.selectedProcessInstance}"/>
+                <p:resetInput target="dlg"/>
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+
+    <p:dialog id="processDetailDlg" widgetVar="dlg" width="1025" height="400" modal="true">
+        <p:chronoline value="#{timeSeriesTableView.events}"
+                      binding="#{timeSeriesTableView.chronolineData}" var="event"
+                      align="top" layout="horizontal" styleClass="customized-chronoline">
+            <p:commandLink process="@this"
+                           onclick="PF('options').select('#{timeSeriesTableView.chronolineData.rowIndex}')">
+                <h6 class="mb-0">#{event.name}</h6>
+            </p:commandLink>
+
+            <f:facet name="marker">
+                                            <span class="custom-marker shadow-1"
+                                                  style="background-color: #{event.status == 'SUCCESS'? '#348861':'#AD342B'}"><i
+                                                    class="pi pi-check"/></span>
+            </f:facet>
+        </p:chronoline>
+
+        <div class="card">
+            <h5>Options And Actions</h5>
+            <p:accordionPanel multiple="true" widgetVar="options" scrollIntoView="center"
+                              toggleSpeed="0">
+                <c:forEach var="event" items="#{timeSeriesTableView.events}"
+                           varStatus="eventStatus">
+                    <p:tab title="#{event.name} #{event.overviewMessage}" titleStyle="">
+                        <c:if test="#{eventStatus.index == 0}">
+                            <f:facet name="options">
+                                <p:menu>
+                                    <p:submenu label="Options">
+                                        <p:menuitem value="Select all" url="#"
+                                                    icon="pi pi-clone"
+                                                    onclick="PF('options').selectAll()"/>
+                                        <p:menuitem value="Unselect all" url="#"
+                                                    icon="pi pi-times"
+                                                    onclick="PF('options').unselectAll()"/>
+                                    </p:submenu>
+                                </p:menu>
+                            </f:facet>
+                        </c:if>
+                        <p class="m-0">
+                            #{event.description}
+                        </p>
+                        <c:if test="#{event.code != null}">
+                            <h6>Code</h6>
+                            <pre class="prettyprint lang-xml">#{event.code}</pre>
+                        </c:if>
+                    </p:tab>
+                </c:forEach>>
+            </p:accordionPanel>
+        </div>
+    </p:dialog>
+</ui:composition>

@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="template.xhtml">
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/flags/flags.css"/>
+
+    </ui:define>
+
+    <ui:define name="title">DataTable</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="grid table-demo">
+                <div class="col-12">
+                    <div class="card">
+                        <h5>Default</h5>
+                        <p>Pagination, sorting, filtering and checkbox selection.</p>
+                        <p:dataTable widgetVar="timeseriesDT" var="log" value="#{logView.logs}"
+                                     filteredValue="#{logView.filteredLogs}"
+                                     rows="20" rowKey="#{log.id}" paginator="true">
+                            <f:facet name="header">
+                                <div class="customers-table-header">
+                                    <span style="font-weight: bold">Processes</span>
+
+                                    <span class="ui-input-icon-left filter-container">
+                                        <i class="pi pi-search"/>
+                                        <p:inputText id="globalFilter" onkeyup="PF('timeseriesDT').filter()"
+                                                     placeholder="Global Search"/>
+                                    </span>
+                                </div>
+                            </f:facet>
+                            <p:column headerText="Date" style="width:2rem" sortBy="#{dateTimeUtils.format(log.createTime)}" sortOrder="desc"
+                                      filterBy="#{dateTimeUtils.format(log.createTime)}" filterMatchMode="contains">
+                                <h:outputText value="#{dateTimeUtils.format(log.createTime)}"/>
+                            </p:column>
+                            <p:column headerText="User" style="width:2rem" sortBy="#{log.user}" filterBy="#{job.user}">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('customersTable').filter()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{logView.users}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{log.user}"/>
+                            </p:column>
+                            <p:column headerText="Description" style="width:2rem" sortBy="#{log.description}" filterBy="#{log.description}">
+                                <h:outputText value="#{log.description}"/>
+                            </p:column>
+
+                            <p:column headerText="From Value" style="width:2rem" sortBy="#{log.oldValue}" filterBy="#{log.oldValue}">
+                                <h:outputText value="#{log.oldValue == null? 'n/a': log.oldValue}"/>
+                            </p:column>
+
+                            <p:column headerText="To Value" style="width:2rem" sortBy="#{log.newValue}" filterBy="#{log.newValue}">
+                                <h:outputText value="#{log.newValue == null? 'n/a': log.newValue}"/>
+                            </p:column>
+
+                            <p:column headerText="To Value" style="width:2rem">
+                                <p:commandButton action="#{logView.revertAction(log)}" rendered="#{log.reversible}" disabled="#{log.reverted}" value="Revert" icon="pi pi-undo" update="@form"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

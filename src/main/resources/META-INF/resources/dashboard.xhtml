@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/freya" template="template.xhtml">
+
+    <ui:define name="title">Dashboard</ui:define>
+
+    <ui:define name="head">
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="layout-dashboard">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="notification">
+                        <h6> TP- DEMO Integration ENV. <a
+                                href="#">Profile settings <i class="pi pi-arrow-up"></i></a></h6>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="grid" style="margin: -1rem;">
+                        <div class="col">
+                            <div class="card overview-box white">
+                                <div class="overview-info">
+                                    <h6>Running process instances</h6>
+                                    <h1>#{metricsView.runningProcessCount.count}</h1>
+                                </div>
+                                <i class="pi pi-clone"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card overview-box blue">
+                                <div class="overview-info">
+                                    <h6>Open incidents</h6>
+                                    <h1>#{metricsView.openIncidentsCount.count}</h1>
+                                </div>
+                                <i class="pi pi-users"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card overview-box gray">
+                                <div class="overview-info">
+                                    <h6>Open Human Tasks</h6>
+                                    <h1>#{metricsView.unassignedTasks.size()}</h1>
+                                </div>
+                                <i class="pi pi pi-chart-pie"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card overview-box darkgray">
+                                <div class="overview-info">
+                                    <h6>Missing intervals count</h6>
+                                    <h1>#{customTimelineView.missingIntervalsCont}</h1>
+                                </div>
+                                <i class="pi pi-th-large"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card overview-box orange">
+                                <div class="overview-info">
+                                    <h6>Monitored processes</h6>
+                                    <h1>#{customTimelineView.monitoredProcessesCont}</h1>
+                                </div>
+                                <i class="pi pi-wave-pulse"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 md:col-12 xl:col-12">
+                    <div class="grid">
+                        <div class="col-12">
+                            <div class="card chart">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h6>Nasdaq 100</h6>
+                                        <p class="subtitle">Line graph</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p:growl id="growl" showSummary="true" showDetail="true" keepAlive="true" life="3000">
+                                        <p:autoUpdate/>
+                                    </p:growl>
+                                    <p:timeline id="timeline" value="#{customTimelineView.model}" class="subtitle"
+                                                style="font-weight: 600; font-size: 12px; color: rgba(41, 50, 65, 0.5);"
+                                                editable="true" eventMargin="10" eventMarginAxis="0"
+                                                start="#{customTimelineView.start}"
+                                                end="#{customTimelineView.end}"
+                                                axisOnTop="true" stackEvents="false" widgetVar="timelineWdgt">
+                                        <f:facet name="menu">
+                                            <p:commandButton type="button" icon="pi pi-chevron-left"
+                                                             onclick="PF('timelineWdgt').move(-0.3);"/>
+                                            <p:commandButton type="button" icon="pi pi-chevron-right"
+                                                             onclick="PF('timelineWdgt').move(0.3);"/>
+                                            <p:commandButton type="button" icon="pi pi-search-minus"
+                                                             onclick="PF('timelineWdgt').zoom(-0.5);"/>
+                                            <p:commandButton type="button" icon="pi pi-search-plus"
+                                                             onclick="PF('timelineWdgt').zoom(0.5);"/>
+                                        </f:facet>
+                                        <p:ajax event="select" listener="#{customTimelineView.onSelect}"/>
+                                        <f:facet name="loading">
+                                            <i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>
+                                        </f:facet>
+                                    </p:timeline>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

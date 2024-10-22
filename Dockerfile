@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Build the application
-#RUN mvn package -DskipTests
+RUN mvn package -DskipTests
 
 # Stage 2: Build the final image to run the Quarkus app
 FROM eclipse-temurin:latest
