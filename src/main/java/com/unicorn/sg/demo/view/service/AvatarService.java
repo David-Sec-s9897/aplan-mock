@@ -18,7 +18,7 @@ public class AvatarService {
     @PostConstruct
     public void init() {
         avatarsMap = new HashMap<>();
-        avatarsMap.put("alice", "amyelsner.png");
+        avatarsMap.put("alice", "ionibowcher.png");
         avatarsMap.put("bob", "amyelsner.png");
         avatarsMap.put("david", "david.png");
     }

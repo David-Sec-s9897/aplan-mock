@@ -18,45 +18,17 @@
         <h:form id="menuform">
             <fr:menu widgetVar="FreyaMenuWidget">
                 <p:menuitem id="m_dashboard" value="Dashboard" icon="pi pi-home" outcome="/dashboard" />
-                <p:submenu id="m_components" label="UI Kit" icon="pi pi-star-fill">
-                    <p:menuitem id="m_formlayout" value="Form Layout" icon="pi pi-id-card" outcome="/dashboard" />
-                    <p:menuitem id="m_input" value="Input" icon="pi pi-check-square" outcome="/dashboard" />
-                    <p:menuitem id="m_floatlabel" value="Float Label" icon="pi pi-bookmark" outcome="/dashboard" />
-                    <p:menuitem id="m_invalidstate" value="Invalid State" icon="pi pi-exclamation-circle" outcome="/dashboard" />
-                    <p:menuitem id="m_button" value="Button" icon="pi pi-mobile" outcome="/dashboard" styleClass="rotated-icon"/>
-                    <p:menuitem id="m_table" value="Table" icon="pi pi-table" outcome="/dashboard" />
-                    <p:menuitem id="m_list" value="List" icon="pi pi-list" outcome="/dashboard" />
-                    <p:menuitem id="m_tree" value="Tree" icon="pi pi-share-alt" outcome="/dashboard" />
-                    <p:menuitem id="m_panel" value="Panel" icon="pi pi-tablet" outcome="/dashboard" />
-                    <p:menuitem id="m_overlay" value="Overlay" icon="pi pi-clone" outcome="/dashboard" />
-                    <p:menuitem id="m_menu" value="Menu" icon="pi pi-bars" outcome="/dashboard" />
-                    <p:menuitem id="m_message" value="Message" icon="pi pi-comment" outcome="/dashboard" />
-                    <p:menuitem id="m_file" value="File" icon="pi pi-file" outcome="/dashboard" />
-                    <p:menuitem id="m_chart" value="Chart" icon="pi pi-chart-bar" outcome="/dashboard" />
-                    <p:menuitem id="m_media" value="Media" icon="pi pi-image" outcome="/dashboard" />
-                    <p:menuitem id="m_misc" value="Misc" icon="pi pi-circle-off" outcome="/dashboard" />
-                </p:submenu>
-                <p:submenu id="m_primeblocks" label="Prime Blocks" icon="pi pi-prime">
-                    <p:menuitem id="m_freeblocks" value="Free Blocks" icon="pi pi-eye" outcome="/dashboard"/>
-                    <p:menuitem id="m_allblocks" value="All Blocks" icon="pi pi-globe" target="_blank" url="https://www.primefaces.org/primeblocks-jsf"/>
+                <p:submenu id="m_default" label="Pages" icon="pi pi-briefcase">
+                    <p:menuitem id="m_crud" value="Dashboard" icon="pi pi-pencil" outcome="/dashboard" />
+                    <p:menuitem id="m_calendar" value="Time Series Upload" icon="pi pi-calendar-plus" outcome="/table" />
+                    <p:menuitem id="m_chronoline" value="Logs" icon="pi pi-calendar" outcome="/logs" />
                 </p:submenu>
                 <p:submenu id="m_utils" label="Utilities" icon="pi pi-compass">
-                    <p:menuitem id="m_icons" value="PrimeIcons" icon="pi pi-prime" outcome="/dashboard"/>
-                    <p:menuitem id="m_flex" value="PrimeFlex" icon="pi pi-desktop" target="_blank" url="https://www.primefaces.org/primeflex"/>
-                    <p:menuitem id="m_figma" value="Figma" icon="pi pi-pencil" target="_blank" url="https://www.figma.com/file/eYBoRNff6GPTlrgYZaMStp/Preview-%7C-Freya-2022"/>
-                </p:submenu>
-                <p:submenu id="m_default" label="Pages" icon="pi pi-briefcase">
-                    <p:menuitem id="m_crud" value="Crud" icon="pi pi-pencil" outcome="/dashboard" />
-                    <p:menuitem id="m_calendar" value="Calendar" icon="pi pi-calendar-plus" outcome="/dashboard" />
-                    <p:menuitem id="m_chronoline" value="Chronoline" icon="pi pi-calendar" outcome="/dashboard" />
-                    <p:menuitem id="m_landing" value="Landing" icon="pi pi-globe" outcome="/dashboard" />
-                    <p:menuitem id="m_login" value="Login" icon="pi pi-sign-in" outcome="/dashboard" />
-                    <p:menuitem id="m_invoice" value="Invoice" icon="pi pi-dollar" outcome="/dashboard" />
-                    <p:menuitem id="m_help" value="Help" icon="pi pi-question-circle" outcome="/dashboard" />
-                    <p:menuitem id="m_error" value="Error" icon="pi pi-times-circle" outcome="/dashboard" />
-                    <p:menuitem id="m_notfound" value="Not Found" icon="pi pi-exclamation-circle" outcome="/dashboard" />
-                    <p:menuitem id="m_access" value="Access Denied" icon="pi pi-lock" outcome="/dashboard" />
-                    <p:menuitem id="m_empty" value="Empty" icon="pi pi-circle-off" outcome="/dashboard" />
+                    <p:menuitem id="m_camunda" value="Camunda" icon="pi pi-star" outcome="/dashboard"/>
+                    <p:menuitem id="m_jaeger" value="Jaeger Agent" icon="pi pi-tags" target="_blank" url="https://www.primefaces.org/primeflex"/>
+                    <p:menuitem id="m_es" value="Kibana" icon="pi pi-pencil" target="_blank" url="https://www.figma.com/file/eYBoRNff6GPTlrgYZaMStp/Preview-%7C-Freya-2022"/>
+                    <p:menuitem id="m_prometheus" value="Prometheus" icon="pi pi-sync" target="_blank" url="https://www.figma.com/file/eYBoRNff6GPTlrgYZaMStp/Preview-%7C-Freya-2022"/>
+                    <p:menuitem id="m_grafana" value="Grafana" icon="pi pi-chart-line" target="_blank" url="https://www.figma.com/file/eYBoRNff6GPTlrgYZaMStp/Preview-%7C-Freya-2022"/>
                 </p:submenu>
                 <p:submenu id="m_hierarchy" label="Hierarchy" icon="pi pi-align-left">
                     <p:submenu id="m_sm1" label="Submenu 1" icon="pi pi-align-left">
@@ -78,10 +50,6 @@
                             <p:menuitem id="m_lnk221" value="Link 2.2.1" icon="pi pi-align-left" url="#" />
                         </p:submenu>
                     </p:submenu>
-                </p:submenu>
-                <p:submenu id="m_getstarted" label="Start" icon="pi pi-download">
-                    <p:menuitem id="m_buy" value="Buy Now" icon="pi pi-shopping-cart" url="https://www.primefaces.org/store" />
-                    <p:menuitem id="m_doc" value="Documentation" icon="pi pi-info-circle" outcome="/dashboard"/>
                 </p:submenu>
             </fr:menu>
         </h:form>

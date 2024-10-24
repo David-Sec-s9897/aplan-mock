@@ -52,7 +52,7 @@ public class RightFormView implements Serializable {
 
     public String redirectToTask(CamundaTaskResponse task){
         String form = task.getFormKey().replace("app:", "");
-        String callbackUrl = "http://37.221.248.104:8080/";
+        String callbackUrl = "http://localhost:8080/";
         return CAMUNDA_BASE_URL.replace("{:formName}",form)
                 .replace("{:taskId}", task.getId())
                 .replace("{:callback}",callbackUrl);

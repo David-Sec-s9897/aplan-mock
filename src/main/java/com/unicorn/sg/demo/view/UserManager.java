@@ -31,7 +31,7 @@ public class UserManager implements Serializable {
     }
 
     public String getAvatar(){
-        return avatarService.getAvatar(identity.getPrincipal().getName());
+        return avatarService.getAvatar(identity.getPrincipal().getName().toLowerCase());
 
     }
 

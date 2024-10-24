@@ -55,7 +55,7 @@
         </p:column>
     </p:dataTable>
 
-    <p:dialog id="processDetailDlg" widgetVar="dlg" width="1025" height="400" modal="true">
+    <p:dialog header="Process audit log" id="processDetailDlg" widgetVar="dlg" width="1025" height="400" modal="true">
         <p:chronoline value="#{timeSeriesTableView.events}"
                       binding="#{timeSeriesTableView.chronolineData}" var="event"
                       align="top" layout="horizontal" styleClass="customized-chronoline">
@@ -65,9 +65,10 @@
             </p:commandLink>
 
             <f:facet name="marker">
-                                            <span class="custom-marker shadow-1"
-                                                  style="background-color: #{event.status == 'SUCCESS'? '#348861':'#AD342B'}"><i
-                                                    class="pi pi-check"/></span>
+                <span class="custom-marker shadow-1"
+                      style="background-color: #{event.status == 'SUCCESS'? '#90cd93':'#f1749e'}">
+                    <i class="pi pi-check"/>
+                </span>
             </f:facet>
         </p:chronoline>
 
@@ -77,7 +78,8 @@
                               toggleSpeed="0">
                 <c:forEach var="event" items="#{timeSeriesTableView.events}"
                            varStatus="eventStatus">
-                    <p:tab title="#{event.name} #{not stringUtils.isEmpty(event.overviewMessage)? '': ' - '} #{event.overviewMessage}" titleStyle="">
+                    <p:tab title="#{event.name} #{not stringUtils.isEmpty(event.overviewMessage)? '': ' - '} #{event.overviewMessage}"
+                           titleStyle="">
                         <c:if test="#{eventStatus.index == 0}">
                             <f:facet name="options">
                                 <p:menu>
@@ -97,7 +99,7 @@
                         </p>
                         <c:if test="#{stringUtils.isEmpty(event.code)}">
                             <h6>Code</h6>
-                            <pre class="prettyprint lang-xml">#{event.code}</pre>
+                            <pre><code class="language-html">#{event.code}</code></pre>
                         </c:if>
                     </p:tab>
                 </c:forEach>>

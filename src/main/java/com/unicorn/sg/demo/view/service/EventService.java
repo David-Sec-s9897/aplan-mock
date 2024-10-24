@@ -9,6 +9,10 @@ import java.util.List;
 
 public class EventService {
 
+    private EventService(){
+        throw new IllegalStateException("Utility class");
+    }
+
     public static List<Event> getOKEvents() {
         List<Event> events = new ArrayList<>();
         events.add(Event.builder().name("Calculate intervals").overviewMessage("").description("" +
