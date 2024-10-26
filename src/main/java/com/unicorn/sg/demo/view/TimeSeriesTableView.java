@@ -182,7 +182,8 @@ public class TimeSeriesTableView implements Serializable {
     public String redirectToCamunda(String taskId) {
         LOGGER.log(Level.INFO, "redirecting task id {0}", taskId);
         taskId = "8195e77d-8bd3-11ef-a305-0242b0426a79"; // demo task id
-        return CAMUNDA_TASKS_BASE_URL.replace("{taskId}", taskId) + "?faces-redirect=true";
+        //return CAMUNDA_TASKS_BASE_URL.replace("{taskId}", taskId) + "?faces-redirect=true";
+        return "#?faces-redirect=true";
     }
 
     public List<TimeSeriesJob> getTimeSeriesJobs() {
@@ -200,7 +201,7 @@ public class TimeSeriesTableView implements Serializable {
     @Transactional
     public void handleStartProcess(TimeSeriesJob job) {
         try {
-            restClient.startProcess(job.getBusinessKey(), true, null, null, null);
+            //restClient.startProcess(job.getBusinessKey(), true, null, null, null);
             LogRecord log = LogRecord.builder().targetId(job.getBusinessKey()).user(userManager.getUserName()).type(LogRecordType.PROCESS_START_AUTOMATICALLY).description("Started automatic process " + job.getTimeSeriesName()).build();
             logRepository.persist(log);
             FacesContext.getCurrentInstance().addMessage(null,
@@ -216,8 +217,8 @@ public class TimeSeriesTableView implements Serializable {
     @Loggable
     public void handleStartManualProcess() {
         try {
-            startTPProcess(selectedTimeSeriesJob.getBusinessKey(), false, startProcessRequest.getStartTime(),
-                    startProcessRequest.getEndTime(), String.valueOf(startProcessRequest.getRevisionNumber()));
+            //startTPProcess(selectedTimeSeriesJob.getBusinessKey(), false, startProcessRequest.getStartTime(),
+            //        startProcessRequest.getEndTime(), String.valueOf(startProcessRequest.getRevisionNumber()));
             LogRecord log = LogRecord.builder().targetId(selectedTimeSeriesJob.getBusinessKey()).user(userManager.getUserName()).type(LogRecordType.PROCESS_START_MANUALY).description("Started manually process " + selectedTimeSeriesJob.getTimeSeriesName())
                     .newValue(startProcessRequest.getStartTime().format(dateTimeUtils.getTpDateFormat()) + " - " + startProcessRequest.getEndTime().format(dateTimeUtils.getTpDateFormat()))
                     .build();

@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="template.xhtml">
+
+    <ui:define name="title">Empty Page</ui:define>
+
+    <ui:define name="content">
+        <div class="grid">
+            <div class="col">
+                <div class="card">
+                    <h4>Tutorials</h4>
+                    <p>In the following page you will find all necessary informations about Data delliverry platform</p>
+                </div>
+                <div class="card">
+                    <h5>TP Introduction</h5>
+                    <div align="center">
+                        <p:video value="https://github.com/David-Sec-s9897/aplan-mock/releases/download/v0.1/TPIntroduction.mp4"
+                                 controls="true"
+                                 player="mp4"
+                                 width="640"
+                                 height="480">
+                            Your browser does not support the video element.
+                            See: <h:outputLink
+                                value="https://www.w3schools.com/html/html5_video.asp">HTML5 Video</h:outputLink>
+                        </p:video>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h5>TP Overview</h5>
+                    <div align="center">
+                        <p:video value="https://github.com/David-Sec-s9897/aplan-mock/releases/download/v0.1/TPoverview.mp4"
+                                 controls="true"
+                                 player="mp4"
+                                 width="640"
+                                 height="480">
+                            Your browser does not support the video element.
+                            See: <h:outputLink
+                                value="https://www.w3schools.com/html/html5_video.asp">HTML5 Video</h:outputLink>
+                        </p:video>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h5>Camunda Platform basic infromations</h5>
+                    <div align="center">
+                        <p:video value="https://github.com/David-Sec-s9897/aplan-mock/releases/download/v0.1/CamundaPlatform.mp4"
+                                 controls="true"
+                                 player="mp4"
+                                 width="640"
+                                 height="480">
+                            Your browser does not support the video element.
+                            See: <h:outputLink
+                                value="https://www.w3schools.com/html/html5_video.asp">HTML5 Video</h:outputLink>
+                        </p:video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
