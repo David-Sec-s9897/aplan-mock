@@ -1,6 +1,7 @@
 package com.unicorn.sg.demo.client.transparency_portal;
 
 import com.unicorn.sg.demo.client.component.CustomObjectMapperProvider;
+import com.unicorn.sg.demo.client.transparency_portal.requests.TransformRequest;
 import com.unicorn.sg.demo.client.transparency_portal.responses.TimeSeriesJobsResponse;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -45,4 +46,9 @@ public interface TransparencyPortalRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     Response updateProcessName(@PathParam("processBusinessKey") String processBusinessKey,
                                String timeSeriesName);
+    @PUT
+    @Path("xsltTransformation/transform")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    Response xsltTransformation(TransformRequest transformRequest);
 }

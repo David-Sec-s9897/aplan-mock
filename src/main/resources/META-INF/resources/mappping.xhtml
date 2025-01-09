@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="template.xhtml">
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/flags/flags.css"/>
+
+    </ui:define>
+
+    <ui:define name="title">DataTable</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="grid table-demo">
+                <div class="col-12">
+                    <div class="card">
+                        <h5>Mapping</h5>
+                        <p></p>
+                        <div class="ui-fluid formgrid grid">
+                            <div class="field col-12">
+                                <p:outputLabel for="tsda" value="TSDA"/>
+                                <p:inputTextarea id="tsda" value="#{mappingView.tsdaData}" rows="10"  escape="false"/>
+                            </div>
+                            <div class="field col-12">
+                                <p:outputLabel for="masterdata" value="Masterdata"/>
+                                <p:inputTextarea id="masterdata" value="#{mappingView.masterData}" rows="10"  escape="false"/>
+                            </div>
+                            <div class="field col-12">
+                                <p:outputLabel for="mapping" value="Mapping"/>
+                                <p:inputTextarea id="mapping" rows="10" value="#{mappingView.mapping}" escape="false"/>
+                            </div>
+                            <p:commandButton action="#{mappingView.submitMapping()}" value="Submit" oncomplete="" update="@form">
+                            </p:commandButton>
+                        </div>
+
+                        <h5>Result</h5>
+                        <div class="ui-fluid formgrid grid">
+                            <div class="field col-12">
+                                <p:outputLabel for="result" value="Result"/>
+                                <p:inputTextarea id="result" value="#{mappingView.mappedResult}" rows="10"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
